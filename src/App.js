@@ -1,5 +1,6 @@
 import React, { Component } from "react";
 import "./App.css";
+import GitUser from './Components/GitUser';
 
 class App extends Component {
   constructor(props) {
@@ -26,17 +27,12 @@ class App extends Component {
   render() {
     let user = null;
     if (this.state.active) {
-      user = (
-        <div>
-          <img src={this.state.user.avatar_url} alt="abstract marker" />
-          <h2>{this.state.user.login}</h2>
-          <p>Type: {this.state.user.type}</p>
-          <p>
-            URL:{" "}
-            <a href={this.state.user.html_url}>{this.state.user.html_url}</a>
-          </p>
-        </div>
-      );
+      user = <GitUser 
+          avatar_url={this.state.user.avatar_url}
+          login={this.state.user.login}
+          type={this.state.user.type}
+          html_url={this.state.user.html_url}
+        />
     }
     return (
       <div>

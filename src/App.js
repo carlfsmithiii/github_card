@@ -35,8 +35,8 @@ class App extends Component {
         />
     }
     return (
-      <div>
-        <button onClick={this.handleEvent}>
+      <div class="user-and-button">
+        <button onClick={this.handleEvent} class="user-button">
           {this.state.active ? "Hide User" : "Show User"}
         </button>
         { user }

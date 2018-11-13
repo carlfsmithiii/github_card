@@ -1,25 +1,50 @@
-import React, { Component } from 'react';
-import logo from './logo.svg';
-import './App.css';
+import React, { Component } from "react";
+import "./App.css";
 
 class App extends Component {
+  constructor(props) {
+    super(props);
+
+    this.state = {
+      user: {},
+      active: false
+    };
+
+    this.handleEvent = this.handleEvent.bind(this);
+  }
+
+  handleEvent(event) {
+    if (!this.state.active) {
+      fetch("https://api.github.com/users/carlfsmithiii")
+        .then(res => res.json())
+        .then(carlStats => this.setState({ user: carlStats, active: true }));
+    } else {
+      this.setState({ active: false });
+    }
+  }
+
   render() {
     return (
-      <div className="App">
-        <header className="App-header">
-          <img src={logo} className="App-logo" alt="logo" />
-          <p>
-            Edit <code>src/App.js</code> and save to reload.
-          </p>
-          <a
-            className="App-link"
-            href="https://reactjs.org"
-            target="_blank"
-            rel="noopener noreferrer"
-          >
-            Learn React
-          </a>
-        </header>
+      <div>
+        <button onClick={this.handleEvent}>
+          {this.state.active ? "Hide User" : "Show User"} 
+        </button>
+        {
+          this.state.user.avatar_url && this.state.active && 
+          <img src={this.state.user.avatar_url} alt="abstract marker" />
+        }
+        {
+          this.state.user.login && this.state.active && 
+          <h2>{this.state.user.login}</h2>
+        }
+        {
+          this.state.user.type && this.state.active && 
+          <p>Type: {this.state.user.type}</p>
+        }
+        {
+          this.state.user.html_url && this.state.active && 
+          <p>URL: <a href={this.state.user.html_url}>{this.state.user.html_url}</a></p>
+        }
       </div>
     );
   }
